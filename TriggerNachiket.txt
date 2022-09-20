@@ -1,0 +1,70 @@
+DELIMITER $$
+CREATE TRIGGER seatUpdate
+after INSERT ON journey_details
+for each row
+BEGIN
+if new.available_seats == 32 then
+INSERT INTO seats VALUES(32, new.Journey_id, 'Available');
+END IF;
+END;
+$$
+
+DELIMITER $$
+CREATE PROCEDURE seatInsert(Journey_id)
+   BEGIN
+	  DECLARE a INT Default 0 ;
+      simple_loop: LOOP
+         SET a=a+1;
+         select a;
+         IF a<=32 THEN
+		INSERT INTO seats VALUES(a, Journey_id, 'Available');
+	 ELSE
+            LEAVE simple_loop;
+         END IF;
+   END LOOP simple_loop;
+END $$
+
+
+DELIMITER $$
+CREATE PROCEDURE seatInsert(Journey_id)
+   BEGIN
+	  DECLARE a INT Default 1;
+start transaction
+      	while a <= 32 do
+	  INSERT INTO seats VALUES(a,Journey_id, 'Available');
+	 set a=a+1
+   END while;
+commit;
+END $$
+
+DELIMITER $$  
+CREATE PROCEDURE seatInsert()
+
+   BEGIN
+      DECLARE a INT Default 1 ;
+      simple_loop: LOOP
+	 INSERT INTO seats VALUES(a,Journey_id,'Available');         
+         SET a=a+1;
+         IF a=33 THEN
+            LEAVE simple_loop;
+         END IF;
+   END LOOP simple_loop;
+END $$
+
+
+DELIMITER $$
+CREATE TRIGGER seatUpdate
+after INSERT ON journey_details
+for each row
+BEGIN
+
+DECLARE a INT Default 1 ;
+      simple_loop: LOOP
+    	 INSERT INTO seats VALUES(a, new.Journey_id, 'available');        
+         SET a=a+1;
+         IF a=33 THEN
+            LEAVE simple_loop;
+         END IF;
+   END LOOP simple_loop;
+END;
+$$

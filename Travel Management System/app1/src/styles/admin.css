@@ -1,0 +1,14 @@
+.container {
+  width: 500;
+  height: 530;
+  position: 'relative';
+  top: 60;
+  left: 0;
+  bottom: 0;
+  margin: 'auto';
+  border-style: 'solid';
+  color: black;
+  border-color: 'lightblue';
+  border-radius: 20;
+  padding: 30;
+}
